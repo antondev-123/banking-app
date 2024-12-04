@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Banking App
 
-## Getting Started
+This is a **browser-based banking application** built with **Next.js**, **TypeScript**, and **Material-UI (MUI)** for the frontend, and **Node.js**, **Prisma**, and **PostgreSQL** for the backend. It provides basic banking functionalities such as depositing money, withdrawing money, transferring money to IBAN accounts, and viewing account statements.
 
-First, run the development server:
+---
 
+## Features
+
+### User Features
+- **Deposit Money**: Add funds to your account.
+- **Withdraw Money**: Withdraw funds from your account.
+- **Transfer Money**: Transfer money to other IBAN accounts with proper IBAN validation.
+- **View Account Statement**: Display a sorted list of transactions by date, showing the amount and current balance.
+
+### Application Details
+- **Responsive Design**: Supports devices with a minimum width of 360px.
+- **IBAN Validation**: Ensures that users can only transfer funds to valid IBAN accounts.
+- **Material-UI Integration**: Provides a modern and intuitive UI/UX.
+- **No Authentication**: App is open for usage without user login.
+
+---
+
+## Technology Stack
+
+### Frontend
+- **Framework**: [Next.js](https://nextjs.org/) (App Router with TypeScript)
+- **Styling**: [Material-UI (MUI)](https://mui.com/)
+- **State Management**: React `useState` and props
+
+### Backend
+- **Framework**: Node.js with API routes in Next.js
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Database**: PostgreSQL (Dockerized)
+
+### Development Tools
+- **Package Manager**: npm
+- **Database**: Dockerized PostgreSQL
+- **Testing**: Jest (if tests are implemented)
+- **Deployment**: Vercel for frontend and backend
+
+---
+
+## Installation and Setup
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [Docker](https://www.docker.com/)
+- [Git](https://git-scm.com/)
+
+### Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/your-username/banking-app.git
+cd banking-app
