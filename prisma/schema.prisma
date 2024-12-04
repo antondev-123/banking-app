@@ -1,0 +1,25 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id       Int       @id @default(autoincrement())
+  iban     String    @unique
+  balance  Float     @default(0)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          Int    @id @default(autoincrement())
+  amount      Float
+  type        String
+  date        DateTime @default(now())
+  accountId   Int
+  targetIban  String?
+  Account     Account @relation(fields: [accountId], references: [id])
+}
