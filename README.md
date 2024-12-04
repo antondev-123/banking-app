@@ -49,5 +49,5 @@ This is a **browser-based banking application** built with **Next.js**, **TypeSc
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/banking-app.git
+git clone https://github.com/antondev-123/banking-app.git
 cd banking-app
