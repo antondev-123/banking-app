@@ -1,9 +1,13 @@
-import api from "@/utils/api";
+import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import api from "@/utils/api";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
     const { senderIban, receiverIban, amount } = req.body;
 
@@ -21,7 +25,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "SenderIban is not valid!" });
     }
 
-    const receiverIbanCheck = await api.get(`/validate-iban?iban=${receiverIban}`);
+    const receiverIbanCheck = await api.get(
+      `/validate-iban?iban=${receiverIban}`
+    );
 
     if (receiverIbanCheck.data.result !== 200) {
       return res.status(400).json({ error: "ReceiverIban is not valid!" });

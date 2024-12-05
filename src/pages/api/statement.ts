@@ -1,9 +1,19 @@
-import api from "@/utils/api";
+import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import api from "@/utils/api";
+
+interface Transaction {
+  date: string; // Or `Date` if it's a Date object
+  amount: number;
+  balance: number;
+}
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "GET") {
     const { iban } = req.query;
 
@@ -17,7 +27,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Iban is not valid!" });
     }
 
-    const account = await prisma.account.findUnique({
+    const account: {
+      transactions: Transaction[];
+      iban: string;
+      balance: number;
+    } = await prisma.account.findUnique({
       where: { iban: String(iban) },
       include: { transactions: true }
     });

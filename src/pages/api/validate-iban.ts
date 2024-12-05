@@ -1,5 +1,9 @@
-export default async function handler(req, res) {
-  console.log("req.query===========>", req.query);
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const response = await fetch(
       `https://api.ibanapi.com/v1/validate/${req.query.iban}?api_key=${process.env.NEXT_PUBLIC_IBAN_API_KEY}`
