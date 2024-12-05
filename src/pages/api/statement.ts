@@ -28,6 +28,7 @@ export default async function handler(
     }
 
     const account: {
+      id: number;
       transactions: Transaction[];
       iban: string;
       balance: number;
