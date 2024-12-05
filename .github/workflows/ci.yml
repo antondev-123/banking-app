@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: '18'
 
+      # Databse migration
+      - name: Run Prisma migrations
+        run: npx prisma migrate deploy
+
       # Install dependencies
       - name: Install dependencies
         run: npm install
