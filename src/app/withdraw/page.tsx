@@ -15,8 +15,14 @@ export default function Withdraw() {
         amount: parseFloat(amount)
       });
       alert(response.data.message);
-    } catch (error: any) {
-      alert(error.response?.data?.error || "Something went wrong");
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        alert(error.response?.data?.error || "Something went wrong");
+      } else if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred");
+      }
     }
   };
 
@@ -45,4 +51,10 @@ export default function Withdraw() {
       </Button>
     </Box>
   );
+}
+
+function isAxiosError(
+  err: unknown
+): err is { response?: { data?: { error: string } } } {
+  return typeof err === "object" && err !== null && "response" in err;
 }

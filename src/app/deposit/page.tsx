@@ -3,13 +3,11 @@
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import api from "../../utils/api";
-import ConfirmModal from "../components/confirmModal";
 
 export default function Deposit() {
   const [iban, setIban] = useState("");
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -22,12 +20,17 @@ export default function Deposit() {
       alert(response.data.message || "Deposit successful");
       setIban("");
       setAmount("");
-    } catch (error) {
-      alert(error.response?.data?.error || "Something went wrong");
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        alert(error.response?.data?.error || "Something went wrong");
+      } else if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
-    // setShowModal(true);
   };
 
   return (
@@ -58,11 +61,12 @@ export default function Deposit() {
       >
         {loading ? "Processing..." : "Deposit"}
       </Button>
-      {/* <ConfirmModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        handleSubmit={handleSubmit}
-      /> */}
     </Box>
   );
+}
+
+function isAxiosError(
+  err: unknown
+): err is { response?: { data?: { error: string } } } {
+  return typeof err === "object" && err !== null && "response" in err;
 }

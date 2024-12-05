@@ -12,19 +12,29 @@ import {
 } from "@mui/material";
 import api from "../../utils/api";
 
+interface Transaction {
+  date: string; // or Date if it's a Date object
+  amount: number;
+  balance: number;
+}
+
 export default function Statement() {
-  const [transactions, setTransactions] = useState([]);
-  const [iban, setIban] = useState("test-iban");
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const iban = "test-iban";
+  // const [iban, setIban] = useState("test-iban");
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await api.get(`/statement?iban=${iban}`);
         setTransactions(response.data.transactions || []);
-      } catch (error: any) {
-        console.error(
-          "Error fetching transactions:",
-          error.response?.data?.error
-        );
+      } catch (error: unknown) {
+        if (isAxiosError(error)) {
+          alert(`Error fetching transactions: ${error.response?.data?.error}`);
+        } else if (error instanceof Error) {
+          alert(error.message);
+        } else {
+          alert("An unknown error occurred");
+        }
       }
     };
 
@@ -56,4 +66,10 @@ export default function Statement() {
       </Table>
     </Box>
   );
+}
+
+function isAxiosError(
+  err: unknown
+): err is { response?: { data?: { error: string } } } {
+  return typeof err === "object" && err !== null && "response" in err;
 }
