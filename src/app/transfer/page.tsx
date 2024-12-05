@@ -35,10 +35,17 @@ export default function Transfer() {
       setSenderIban("");
       setReceiverIban("");
       setAmount("");
-    } catch (error: any) {
-      alert(
-        error.response?.data?.error || "An error occurred during the transfer."
-      );
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        alert(
+          error.response?.data?.error ||
+            "An error occurred during the transfer."
+        );
+      } else if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
@@ -84,4 +91,10 @@ export default function Transfer() {
       </Button>
     </Box>
   );
+}
+
+function isAxiosError(
+  err: unknown
+): err is { response?: { data?: { error: string } } } {
+  return typeof err === "object" && err !== null && "response" in err;
 }
